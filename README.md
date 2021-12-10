@@ -1,22 +1,14 @@
-# Potree Converter
+# Potree Converter 1.7 for Linux
 
-Master: [![Build Status](https://travis-ci.org/potree/PotreeConverter.svg?branch=master)](https://travis-ci.org/potree/PotreeConverter)
-Develop: [![Build Status](https://travis-ci.org/potree/PotreeConverter.svg?branch=develop)](https://travis-ci.org/potree/PotreeConverter)
-
-Builds a potree octree from las, laz, binary ply, xyz or ptx files.
-
-## Downloads
-
-* [Source Code and windows 64bit releases](https://github.com/potree/PotreeConverter/releases)
+Builds a potree octree from las, laz, binary ply, xyz or ptx files. The code has been adjusted for version 1.7 of the PotreeConverter and for Linux.
 
 ## Dependencies
 
-* [lastools(LASzip)](https://github.com/LAStools/LAStools) or [fork of lastools with cmake for LASzip](https://github.com/m-schuetz/LAStools)
+- [lastools(LASzip)](https://github.com/LAStools/LAStools) or [fork of lastools with cmake for LASzip](https://github.com/m-schuetz/LAStools)
 
 ## Build
 
 ### linux / gcc 4.9
-
 
 lastools (from fork with cmake)
 
@@ -46,57 +38,6 @@ make
 
 ```
 
-### OS X
-
-Same as the linux instructions above, except:
-
-1. Give cmake absolute paths to the LASzip tools you just built. (Otherwise make might not be able to find them)
-2. LASZip library will be called `liblaszip.dylib`, not `liblaszip.so `
-
-```
-...
-
-cmake -DCMAKE_BUILD_TYPE=Release -DLASZIP_INCLUDE_DIRS=[ABSOLUTE_PATH_TO_LASTOOLS]/master/LASzip/dll -DLASZIP_LIBRARY=[ABSOLUTE_PATH_TO_LASTOOLS]/master/LASzip/build/src/liblaszip.dylib ..
-make
-
-```
-
-### Windows / Microsoft Visual Studio 2019:
-
-Use the cmd command line. Power Shell might now work.
-
-lastools
-
-```
-cd D:/dev/workspaces/lastools/
-git clone https://github.com/m-schuetz/LAStools.git master
-cd master/LASzip
-mkdir build
-cd build
-cmake ../
-```
-
-PotreeConverter
-
-```
-# make sure you've got these environment variables set with your directory structure
-set LASZIP_INCLUDE_DIRS=C:\dev\workspaces\lastools\master\LASzip\dll
-set LASZIP_LIBRARY=C:\dev\workspaces\lastools\master\LASzip\build\src\Release\laszip.lib
-
-# checkout PotreeConverter
-cd D:/dev/workspaces/PotreeConverter
-git clone https://github.com/potree/PotreeConverter.git master
-cd master
-mkdir build
-cd build
-
-# Visual Studio project
-cmake -DLASZIP_INCLUDE_DIRS=%LASZIP_INCLUDE_DIRS% -DLASZIP_LIBRARY=%LASZIP_LIBRARY%  ../
-
-# copy ./PotreeConverter/resources/page_template to your binary working directory.
-
-```
-
 ## PotreeConverter Usage
 
 Converts las files to the potree file format.
@@ -105,9 +46,8 @@ inside the directory will be converted.
 
 Options:
 
-
 ```
-$ PotreeConverter -h                                      
+$ PotreeConverter -h
   -i [ --source ]                        input files
   -h [ --help ]                          prints usage
   -p [ --generate-page ]                 Generates a ready to use web page with the given name.
@@ -151,8 +91,8 @@ Examples:
     ./PotreeConverter.exe C:/data -o C:/potree_converted -aabb "-0.748 -2.780 2.547 3.899 1.867 7.195"
     ./PotreeConverter.exe C:/new_data.las -o C:/potree_converted --incremental
 
-	# tell the converter that coordinates are in a UTM zone 10N projection. Also, create output in LAZ format
-	./PotreeConverter.exe C:/data -o C:/potree_converted -p pageName --projection "+proj=utm +zone=10 +ellps=GRS80 +datum=NAD83 +units=m +no_defs" --overwrite --output-format LAZ
+    # tell the converter that coordinates are in a UTM zone 10N projection. Also, create output in LAZ format
+    ./PotreeConverter.exe C:/data -o C:/potree_converted -p pageName --projection "+proj=utm +zone=10 +ellps=GRS80 +datum=NAD83 +units=m +no_defs" --overwrite --output-format LAZ
 
-	# using a swiss projection. Use http://spatialreference.org/ to find projections in proj4 format
-	./PotreeConverter.exe C:/data -o C:/potree_converted -p pageName --projection "+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs" --overwrite
+    # using a swiss projection. Use http://spatialreference.org/ to find projections in proj4 format
+    ./PotreeConverter.exe C:/data -o C:/potree_converted -p pageName --projection "+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs" --overwrite
